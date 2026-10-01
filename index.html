@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experimento de Cámara Web</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        video { border: 2px solid #333; border-radius: 10px; background-color: #000; width: 80%; max-width: 500px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Prueba de Acceso a la Cámara</h1>
+    <p>Haz clic en el botón para solicitar permiso y activar tu cámara en este navegador.</p>
+    
+    <button id="activarCamara">Activar Cámara</button>
+    <br><br>
+    <video id="videoElement" autoplay playsinline></video>
+
+    <script>
+        const boton = document.getElementById('activarCamara');
+        const video = document.getElementById('videoElement');
+
+        boton.addEventListener('click', async () => {
+            try {
+                // Solicita el flujo de video al navegador de manera explícita
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                
+                // Asigna el flujo de la cámara al elemento de video para mostrarlo
+                video.srcObject = stream;
+            } catch (error) {
+                console.error("Error al acceder a la cámara:", error);
+                alert("No se pudo acceder a la cámara. Asegúrate de otorgar los permisos en la ventana emergente.");
+            }
+        });
+    </script>
+
+</body>
+</html>
